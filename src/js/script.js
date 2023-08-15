@@ -51,17 +51,33 @@ const select = {
   const templates = {
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
   };
-
+//Constructor
   class Product{
     constructor(id, data){
       const thisProduct = this;
+
       this.id = id;
       this.data = data;
 
-
       console.log('new Product:', thisProduct);
+      thisProduct.renderInMenu();
+    }
+    renderInMenu(){
+      const thisProduct = this;
+
+      /* [DONE]generate HTML based on template */
+      const generatedHTML = templates.menuProduct(thisProduct.data);
+      console.log(generatedHTML);
+      /*[DONE] create element using utils.createElementFromHTML */
+      thisProduct.element = utils.createDOMFromHTML(generatedHTML);
+      /*[DONE] find menu container */
+      const menuContainer = document.querySelector(select.containerOf.menu);
+      /* add element to menu */
+      menuContainer.appendChild(thisProduct.element);
     }
   }
+
+  //Methods
   const app = {
       initData: function(){
         const thisApp = this;
