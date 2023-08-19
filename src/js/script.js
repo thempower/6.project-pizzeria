@@ -59,7 +59,7 @@ const select = {
       this.id = id;
       this.data = data;
 
-      console.log('new Product:', thisProduct);
+
       thisProduct.renderInMenu();
       thisProduct.initAccordion();
     }
@@ -68,29 +68,28 @@ const select = {
 
       /* [DONE]generate HTML based on template */
       const generatedHTML = templates.menuProduct(thisProduct.data);
-      console.log(generatedHTML);
       /*[DONE] create element using utils.createElementFromHTML */
       thisProduct.element = utils.createDOMFromHTML(generatedHTML);
       /*[DONE] find menu container */
       const menuContainer = document.querySelector(select.containerOf.menu);
-      /* add element to menu */
+      /*[DONE] add element to menu */
       menuContainer.appendChild(thisProduct.element);
     }
     initAccordion(){
       const thisProduct = this;
 
-      /* [DONE]find the clickable trigger (the element that should react to clicking) */
+      /* find the clickable trigger (the element that should react to clicking) */
       const clickableTrigger = document.querySelector(select.menuProduct.clickable);
-      console.log("🚀 ~ file: script.js:84 ~ Product ~ initAccordion ~ clickableTrigger:", clickableTrigger)
+      console.log("🚀 ~ file: script.js:84 ~ Product ~ initAccordion ~ lickableTrigger:", clickableTrigger)
 
 
-      /*[DONE] START: add event listener to clickable trigger on event click */
-      clickableTrigger.addEventListener('click', function() {
-      /*[DONE] prevent default action for event */
-        event.preventDefault();
+      /* START: add event listener to clickable trigger on event click */
+      clickableTrigger.addEventListener('click', function(event) {
+        /* prevent default action for event */
+        console.log('siema');
         /* find active product (product that has active class) */
 
-        /* if there is active   product and it's not thisProduct.element, remove class active from it */
+        /* if there is active product and it's not thisProduct.element, remove class active from it */
 
         /* toggle active class on thisProduct.element */
       });
@@ -102,14 +101,13 @@ const select = {
   const app = {
       initData: function(){
         const thisApp = this;
-        console.log('thisApp.data:', thisApp.data)
+
 
         thisApp.data = dataSource;
       },
 
       initMenu(){
         const thisApp = this;
-        console.log('thisApp.data:', thisApp.data);
 
         for (let productData in thisApp.data.products) {
           new Product(productData, thisApp.data.products[productData]);
