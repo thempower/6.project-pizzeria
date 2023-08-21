@@ -140,23 +140,23 @@ const select = {
      // {DONE]for every option in this category
 
 for(let optionId in param.options) {
-  // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
+  //[DONE] determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
   const option = param.options[optionId]
-  // check if there is param with a name of paramId in formData and if it includes optionId
+  //[DONE] check if there is param with a name of paramId in formData and if it includes optionId
   let optionSelected = formData[paramId] && formData[paramId].includes(optionId);
-    // check if the option is not default
-    if(optionSelected != option.default) {
-      // add option price to price variable
-      price = price + option.price;
-
-// check if the option is default
-  } else if ( optionSelected == option.default) {
-      // reduce price variable
-      price = price - option.price;
+    //[DONE] check if the option is not default
+    if(optionSelected) {
+      if(!option.default){
+      //[DONE] add option price to price variable
+      price += option.price;
+      }
+      //[DONE] check if the option is default
+  } else if (option.default) {
+      //[DONE] reduce price variable
+      price -= option.price;
     }
 }}
-
-      // update calculated price in the HTML
+      //[DONE] update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
     }
   }
