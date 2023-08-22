@@ -86,7 +86,7 @@ const select = {
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
-
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
 
     }
 
@@ -142,19 +142,34 @@ const select = {
 for(let optionId in param.options) {
   //[DONE] determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
   const option = param.options[optionId]
+  const optionImage = thisProduct.imageWrapper.querySelector(`.${paramId}-${optionId}`);
+  if (optionImage != null) {
+  optionImage.classList.remove(classNames.menuProduct.imageVisible);
+  }
   //[DONE] check if there is param with a name of paramId in formData and if it includes optionId
   let optionSelected = formData[paramId] && formData[paramId].includes(optionId);
-    //[DONE] check if the option is not default
+
+  //[DONE] check if the option is not default
     if(optionSelected) {
+
       if(!option.default){
       //[DONE] add option price to price variable
       price += option.price;
       }
+    if(optionImage){
+      optionImage.classList.add(classNames.menuProduct.imageVisible);
+
+
+    }
       //[DONE] check if the option is default
   } else if (option.default) {
       //[DONE] reduce price variable
       price -= option.price;
+      if (optionImage) {
+        optionImage.classList.remove(classNames.menuProduct.imageVisible);
+      }
     }
+
 }}
       //[DONE] update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
