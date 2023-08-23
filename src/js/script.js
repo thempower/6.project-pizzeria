@@ -51,15 +51,37 @@ const select = {
   const templates = {
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
   };
+
 //Constructor
 class AmountWidget{
   constructor(element){
     const thisWidget = this;
+    thisWidget.getElements(element);
 
-    console.log('AmountWidget:', thisWidget);
-    console.log('constructor arguments:', element);
+    thisWidget.setValue();
+  }
+  getElements(element){
+    const thisWidget = this;
+
+    thisWidget.element = element;
+    thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+    thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+    thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+  }
+
+  setValue(value){
+    const thisWidget = this;
+    const newValue = parseInt(value);
+    console.log("🚀 ~ file: script.js:73 ~ AmountWidget ~ setValue ~ newValue:", newValue)
+    if( thisWidget.value !== newValue) {
+      thisWidget.value = newValue;
+      console.log(thisWidget.value);
+    } else {
+      console.log('test');
+    }
   }
 }
+
   class Product{
     constructor(id, data){
       const thisProduct = this;
@@ -74,6 +96,17 @@ class AmountWidget{
       thisProduct.initOrderForm();
       thisProduct.processOrder();
       thisProduct.initAmountWidget();
+
+    }
+    getElements(){
+      const thisProduct = this;
+      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
+      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
+      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
+      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
     renderInMenu(){
       const thisProduct = this;
@@ -87,20 +120,6 @@ class AmountWidget{
       /*[DONE] add element to menu */
       menuContainer.appendChild(thisProduct.element);
     }
-
-
-
-    getElements(){
-      const thisProduct = this;
-      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
-      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
-      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
-      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
-      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
-      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
-      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
-    }
-
     initAccordion(){
       const thisProduct = this;
 
@@ -186,7 +205,7 @@ for(let optionId in param.options) {
       const thisProduct = this;
 
       thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
-      console.log("🚀 ~ file: script.js:188 ~ initAmountWidget ~ thisProduct.amountWidget:", thisProduct.amountWidget)
+
     }
   }
   //Methods
