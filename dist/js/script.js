@@ -52,6 +52,14 @@ const select = {
     menuProduct: Handlebars.compile(document.querySelector(select.templateOf.menuProduct).innerHTML),
   };
 //Constructor
+class AmountWidget{
+  constructor(element){
+    const thisWidget = this;
+
+    console.log('AmountWidget:', thisWidget);
+    console.log('constructor arguments:', element);
+  }
+}
   class Product{
     constructor(id, data){
       const thisProduct = this;
@@ -65,6 +73,7 @@ const select = {
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
       thisProduct.processOrder();
+      thisProduct.initAmountWidget();
     }
     renderInMenu(){
       const thisProduct = this;
@@ -79,6 +88,8 @@ const select = {
       menuContainer.appendChild(thisProduct.element);
     }
 
+
+
     getElements(){
       const thisProduct = this;
       thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
@@ -87,7 +98,7 @@ const select = {
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
-
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
 
     initAccordion(){
@@ -121,7 +132,6 @@ const select = {
           thisProduct.processOrder();
         });
       }
-
       thisProduct.cartButton.addEventListener('click', function(event){
         event.preventDefault();
         thisProduct.processOrder();
@@ -151,15 +161,12 @@ for(let optionId in param.options) {
 
   //[DONE] check if the option is not default
     if(optionSelected) {
-
       if(!option.default){
       //[DONE] add option price to price variable
       price += option.price;
       }
     if(optionImage){
       optionImage.classList.add(classNames.menuProduct.imageVisible);
-
-
     }
       //[DONE] check if the option is default
   } else if (option.default) {
@@ -169,28 +176,29 @@ for(let optionId in param.options) {
         optionImage.classList.remove(classNames.menuProduct.imageVisible);
       }
     }
-
-}}
+  }
+}
       //[DONE] update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
     }
-  }
 
+    initAmountWidget() {
+      const thisProduct = this;
+
+      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+      console.log("🚀 ~ file: script.js:188 ~ initAmountWidget ~ thisProduct.amountWidget:", thisProduct.amountWidget)
+    }
+  }
   //Methods
   const app = {
       initData: function(){
         const thisApp = this;
-
-
         thisApp.data = dataSource;
       },
-
       initMenu(){
         const thisApp = this;
-
         for (let productData in thisApp.data.products) {
           new Product(productData, thisApp.data.products[productData]);
-
         }
       },
     init: function(){
