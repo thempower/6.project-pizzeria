@@ -110,7 +110,7 @@ class AmountWidget{
     }
     renderInMenu(){
       const thisProduct = this;
-
+      //
       /* [DONE]generate HTML based on template */
       const generatedHTML = templates.menuProduct(thisProduct.data);
       /*[DONE] create element using utils.createElementFromHTML */
