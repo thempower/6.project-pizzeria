@@ -29,6 +29,7 @@ const select = {
         input: 'input[name="amount"]',
         linkDecrease: 'a[href="#less"]',
         linkIncrease: 'a[href="#more"]',
+
       },
     },
   };
@@ -70,19 +71,30 @@ class AmountWidget{
     thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
     thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
     thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+    thisWidget.defaultMin = (settings.amountWidget.defaultMin);
+    thisWidget.defaultMax = (settings.amountWidget.defaultMax);
+    console.log("🚀 ~ file: script.js:75 ~ AmountWidget ~ getElements ~ thisWidget.defaultMin:", thisWidget.defaultMin)
 
   }
 
   setValue(value){
     const thisWidget = this;
-     const newValue = parseInt(value);
+     let newValue = parseInt(value);
 
     if( thisWidget.value !== newValue && !isNaN(newValue)) {
       thisWidget.value = newValue;
-      console.log("🚀 ~ file: script.js:79 ~ AmountWidget ~ setValue ~ newValue:", newValue)
+      if (thisWidget.value < thisWidget.defaultMin){
+        newValue = thisWidget.defaultMin;
+
+      } if(thisWidget.value > thisWidget.defaultMax){
+        newValue = thisWidget.defaultMax;
+        console.log("🚀 ~ file: script.js:91 ~ AmountWidget ~ setValue ~ newValue:", newValue)
+      }
+      thisWidget.input.value = newValue;
+      console.log("🚀 ~ file: script.js:94 ~ AmountWidget ~ setValue ~ newValue:", newValue)
+
     }
 
-    thisWidget.input.value = thisWidget.value;
   }
   initActions(){
     const thisWidget = this;
