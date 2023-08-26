@@ -77,16 +77,19 @@ class AmountWidget{
     const thisWidget = this;
      const newValue = parseInt(value);
 
-
-    if( thisWidget.input.value !== newValue && !isNaN(newValue)) {
+    if( thisWidget.value !== newValue && !isNaN(newValue)) {
       thisWidget.value = newValue;
-      thisWidget.input.value = newValue;
       console.log("🚀 ~ file: script.js:79 ~ AmountWidget ~ setValue ~ newValue:", newValue)
     }
+
+    thisWidget.input.value = thisWidget.value;
   }
   initActions(){
     const thisWidget = this;
-      thisWidget.input.addEventListener('change', thisWidget.setValue(thisWidget.input.value));
+    thisWidget.input.addEventListener('change', function(event) {
+      event.preventDefault();
+      thisWidget.setValue(thisWidget.input.value);
+    });
       thisWidget.linkDecrease.addEventListener('click', function(value){
         value.preventDefault();
         thisWidget.setValue(thisWidget.value - 1);
