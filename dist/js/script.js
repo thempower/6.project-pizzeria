@@ -88,7 +88,7 @@ class AmountWidget{
 
       } if(thisWidget.value > thisWidget.defaultMax){
         newValue = thisWidget.defaultMax;
-        console.log("🚀 ~ file: script.js:91 ~ AmountWidget ~ setValue ~ newValue:", newValue)
+
       }
       thisWidget.input.value = newValue;
       console.log("🚀 ~ file: script.js:94 ~ AmountWidget ~ setValue ~ newValue:", newValue)
