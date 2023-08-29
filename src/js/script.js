@@ -82,18 +82,16 @@ class AmountWidget{
      let newValue = parseInt(value);
 
     if( thisWidget.value !== newValue && !isNaN(newValue)) {
-      thisWidget.value = newValue;
-      if (thisWidget.value < thisWidget.defaultMin){
-        newValue = thisWidget.defaultMin;
+      if (newValue <= thisWidget.defaultMin){
+        newValue =  thisWidget.defaultMin;
 
-      } if(thisWidget.value > thisWidget.defaultMax){
+      } if(newValue >= thisWidget.defaultMax){
         newValue = thisWidget.defaultMax;
-
       }
-      thisWidget.input.value = newValue;
-      console.log("🚀 ~ file: script.js:94 ~ AmountWidget ~ setValue ~ newValue:", newValue)
-
+      thisWidget.value = newValue;
     }
+
+      thisWidget.input.value = thisWidget.value;
 
   }
   initActions(){
