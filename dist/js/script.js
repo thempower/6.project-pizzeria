@@ -58,8 +58,12 @@ class AmountWidget{
   constructor(element){
     const thisWidget = this;
     thisWidget.getElements(element);
-    thisWidget.setValue(thisWidget.input.value);
 
+    if (thisWidget.input.value === '' || thisWidget.input.value === undefined ) {
+      thisWidget.setValue(settings.amountWidget.defaultValue)
+  } else {
+      thisWidget.setValue(thisWidget.input.value);
+  }
 
     thisWidget.initActions();
 
@@ -73,8 +77,6 @@ class AmountWidget{
     thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
     thisWidget.defaultMin = (settings.amountWidget.defaultMin);
     thisWidget.defaultMax = (settings.amountWidget.defaultMax);
-    console.log("🚀 ~ file: script.js:75 ~ AmountWidget ~ getElements ~ thisWidget.defaultMin:", thisWidget.defaultMin)
-
   }
 
   setValue(value){
