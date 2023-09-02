@@ -58,9 +58,9 @@ class AmountWidget{
   constructor(element){
     const thisWidget = this;
     thisWidget.getElements(element);
-
-
     thisWidget.setValue(thisWidget.input.value);
+
+
     thisWidget.initActions();
 
   }
@@ -90,7 +90,7 @@ class AmountWidget{
       }
       thisWidget.value = newValue;
     }
-
+      thisWidget.announce();
       thisWidget.input.value = thisWidget.value;
 
   }
@@ -110,6 +110,12 @@ class AmountWidget{
           thisWidget.setValue(thisWidget.value + 1);
 
           });
+  }
+  announce(){
+    const thisWidget = this;
+
+    const event = new Event('updated');
+    thisWidget.element.dispatchEvent(event);
   }
   }
 
@@ -230,13 +236,19 @@ for(let optionId in param.options) {
   }
 }
       //[DONE] update calculated price in the HTML
+      price *= thisProduct.amountWidget.value;
       thisProduct.priceElem.innerHTML = price;
     }
 
     initAmountWidget() {
       const thisProduct = this;
-
       thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+      this.amountWidgetElem.addEventListener('updated', event => {
+        event.preventDefault();
+        this.processOrder();
+      });
+
+
 
     }
   }
