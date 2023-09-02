@@ -132,8 +132,9 @@ class AmountWidget{
       thisProduct.getElements();
       thisProduct.initAccordion();
       thisProduct.initOrderForm();
-      thisProduct.processOrder();
       thisProduct.initAmountWidget();
+      thisProduct.processOrder();
+
 
     }
     getElements(){
@@ -177,6 +178,7 @@ class AmountWidget{
         thisProduct.element.classList.toggle(classNames.menuProduct.wrapperActive);
       });
     }
+
     initOrderForm(){
       const thisProduct = this;
       thisProduct.form.addEventListener('submit', function(event){
@@ -192,6 +194,16 @@ class AmountWidget{
       thisProduct.cartButton.addEventListener('click', function(event){
         event.preventDefault();
         thisProduct.processOrder();
+      });
+    }
+    initAmountWidget() {
+      const thisProduct = this;
+      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+      this.amountWidgetElem.addEventListener('updated', event => {
+        event.preventDefault();
+       // console.log(thisProduct.amountWidget.value);
+        this.processOrder();
+
       });
     }
     processOrder() {
@@ -234,23 +246,14 @@ for(let optionId in param.options) {
       }
     }
   }
+
 }
       //[DONE] update calculated price in the HTML
       price *= thisProduct.amountWidget.value;
       thisProduct.priceElem.innerHTML = price;
     }
 
-    initAmountWidget() {
-      const thisProduct = this;
-      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
-      this.amountWidgetElem.addEventListener('updated', event => {
-        event.preventDefault();
-        this.processOrder();
-      });
 
-
-
-    }
   }
   //Methods
   const app = {
