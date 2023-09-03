@@ -281,14 +281,42 @@ for(let optionId in param.options) {
       }
     }
   }
-
 }
       //[DONE] update calculated price in the HTML
       price *= thisProduct.amountWidget.value;
       thisProduct.priceElem.innerHTML = price;
     }
+  }
+
+  class Cart{
+    constructor(element){
+      const thisCart = this;
+
+      thisCart.procucts = [];
+      thisCart.getElements(element);
+      this.initActions();
+
+    }
+
+    getElements(element){
+      const thisCart = this;
+
+      thisCart.dom = {
+        wrapper: element,
+        toogleTrigger: element.querySelector(select.cart.toggleTrigger)
+      };
 
 
+    }
+
+    initActions(){
+      const thisCart = this;
+      thisCart.dom.toogleTrigger.addEventListener('click', event =>{
+        event.preventDefault();
+        console.log('kliknieto');
+        thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
+      });
+    }
   }
   //Methods
   const app = {
@@ -302,6 +330,14 @@ for(let optionId in param.options) {
           new Product(productData, thisApp.data.products[productData]);
         }
       },
+
+      initCart: function(){
+        const thisApp = this;
+
+        const cartElem = document.querySelector(select.containerOf.cart);
+        thisApp.cart = new Cart(cartElem);
+      },
+
     init: function(){
       const thisApp = this;
       console.log('*** App starting ***');
@@ -312,6 +348,7 @@ for(let optionId in param.options) {
 
       thisApp.initData();
       thisApp.initMenu();
+      thisApp.initCart();
     }
   };
 
