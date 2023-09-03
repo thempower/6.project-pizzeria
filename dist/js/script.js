@@ -229,6 +229,7 @@ class AmountWidget{
       thisProduct.cartButton.addEventListener('click', function(event){
         event.preventDefault();
         thisProduct.processOrder();
+        thisProduct.addToCart();
       });
     }
     initAmountWidget() {
@@ -286,6 +287,12 @@ for(let optionId in param.options) {
       price *= thisProduct.amountWidget.value;
       thisProduct.priceElem.innerHTML = price;
     }
+
+    addToCart(){
+      const thisProduct = this;
+
+      app.cart.add(thisProduct);
+    }
   }
 
   class Cart{
@@ -295,6 +302,7 @@ for(let optionId in param.options) {
       thisCart.procucts = [];
       thisCart.getElements(element);
       this.initActions();
+
 
     }
 
@@ -316,6 +324,11 @@ for(let optionId in param.options) {
         console.log('kliknieto');
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
+    }
+
+    add(menuProduct){
+      //const thisCart = this;
+      console.log('adding product', menuProduct)
     }
   }
   //Methods
