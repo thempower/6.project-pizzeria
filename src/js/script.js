@@ -347,6 +347,8 @@ for(let optionId in param.options) {
       app.cart.add(thisProduct.preparateCartProduct());
 
 
+
+
     }
   }
 
@@ -354,7 +356,7 @@ for(let optionId in param.options) {
     constructor(element){
       const thisCart = this;
 
-      thisCart.procucts = [];
+      thisCart.products = [];
       thisCart.getElements(element);
       this.initActions();
 
@@ -366,7 +368,8 @@ for(let optionId in param.options) {
 
       thisCart.dom = {
         wrapper: element,
-        toogleTrigger: element.querySelector(select.cart.toggleTrigger)
+        toogleTrigger: element.querySelector(select.cart.toggleTrigger),
+        productList: element.querySelector(select.cart.productList),
       };
 
 
@@ -381,8 +384,10 @@ for(let optionId in param.options) {
     }
 
     add(menuProduct){
-      //const thisCart = this;
-      console.log('adding product', menuProduct)
+      const thisCart = this;
+      const generatedHTML = templates.cartProduct(menuProduct);
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+      thisCart.dom.productList.appendChild(generatedDOM);
     }
   }
   //Methods
