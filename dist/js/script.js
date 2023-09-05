@@ -283,6 +283,8 @@ for(let optionId in param.options) {
 }
       //[DONE] update calculated price in the HTML
       this.priceSingle = price;
+      this.amount = thisProduct.amountWidget.value;
+      this.name = thisProduct.name;
 
       price *= thisProduct.amountWidget.value;
       thisProduct.priceElem.innerHTML = price;
@@ -290,10 +292,11 @@ for(let optionId in param.options) {
 
 
     preparateCartProduct(){
-      const thisProduct = this;
+      //const thisProduct = this;
       const productSummary = {
         id: this.id,
-        name: this.name,
+        name: this.data.name,
+        amount: this.amount,
         priceSingle: this.priceSingle,
         price: this.priceSingle * this.amountWidget.value,
       };
@@ -307,7 +310,7 @@ for(let optionId in param.options) {
 
     addToCart(){
       const thisProduct = this;
-      app.cart.add(thisProduct.preparateCartProduct);
+      app.cart.add(thisProduct.preparateCartProduct());
 
 
     }
