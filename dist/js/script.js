@@ -302,9 +302,8 @@ for(let optionId in param.options) {
         params: this.prepareCartProductParams()
       };
 
-      return {
-        productSummary,
-      }
+      return productSummary;
+
       //const params = {};
 
     }
