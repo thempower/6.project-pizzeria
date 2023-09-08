@@ -291,24 +291,6 @@ for(let optionId in param.options) {
       thisProduct.priceElem.innerHTML = price;
     }
 
-
-    preparateCartProduct(){
-      //const thisProduct = this;
-      const productSummary = {
-        id: this.id,
-        name: this.data.name,
-        amount: this.amount,
-        priceSingle: this.priceSingle,
-        price: this.priceSingle * this.amountWidget.value,
-        params: this.prepareCartProductParams()
-      };
-
-      return productSummary;
-
-      //const params = {};
-
-    }
-
     prepareCartProductParams() {
       const thisProduct = this;
 
@@ -340,6 +322,21 @@ for(let optionId in param.options) {
       return params;
     }
 
+     preparateCartProduct(){
+      //const thisProduct = this;
+      const productSummary = {
+        id: this.id,
+        name: this.data.name,
+        amount: this.amount,
+        priceSingle: this.priceSingle,
+        price: this.priceSingle * this.amountWidget.value,
+        params: this.prepareCartProductParams(),
+
+      };
+      console.log(productSummary.params);
+      console.log(productSummary);
+      return productSummary;
+    }
 
 
     addToCart(){
