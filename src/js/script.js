@@ -323,6 +323,7 @@ for(let optionId in param.options) {
           }
         }
       }
+      console.log('params:', params);
 
       return params;
     }
@@ -439,7 +440,6 @@ for(let optionId in param.options) {
       this.amount = menuProduct.amount;
       this.priceSingle = menuProduct.priceSingle;
       this.price = menuProduct.price;
-      this.paramsOnlyIds = menuProduct.paramsOnlyIds;
       this.id = menuProduct.id;
 
       this.getElements(element);
@@ -514,7 +514,6 @@ for(let optionId in param.options) {
             thisApp.initMenu();
 
           })
-          console.log('thisApp.data', JSON.stringify.apply(thisApp.data));
       },
       initMenu(){
         const thisApp = this;
