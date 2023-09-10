@@ -371,7 +371,10 @@ for(let optionId in param.options) {
         deliveryFee: element.querySelector(select.cart.deliveryFee),
         subtotalPrice: element.querySelector(select.cart.subtotalPrice),
         totalPrice: element.querySelectorAll(select.cart.totalPrice),
-        totalNumber: element.querySelector(select.cart.totalNumber)
+        totalNumber: element.querySelector(select.cart.totalNumber),
+        form: element.querySelector(select.cart.form),
+        address: element.querySelector(select.cart.address),
+        phone: element.querySelector(select.cart.phone),
 
       };
     }
@@ -387,6 +390,11 @@ for(let optionId in param.options) {
       });
         thisCart.dom.productList.addEventListener('remove', event =>{
         thisCart.remove(event.detail.cartProduct);
+      });
+      this.dom.form.addEventListener('submit', event => {
+        event.preventDefault();
+        console.log('order has been sent');
+        thisCart.sentOrder();
       });
      }
 
@@ -429,6 +437,22 @@ for(let optionId in param.options) {
       const indexToRemove = this.products.indexOf(productToRemove);
       this.products.splice(indexToRemove, 1);
       this.update();
+    }
+
+    sentOrder() {
+      const  thisCard = this;
+    //  const url = `${settings.db.url}/${settings.db.orders}`;
+
+      thisCard.payload = {
+        address: app.cart.dom.address.value,
+        phone: app.cart.dom.phone.value,
+        totalPrice: app.cart.totalPrice,
+        subtotalPrice: app.cart.subtotalPrice,
+        totalNumber: app.cart.totalNumber,
+        deliveryFee: app.cart.deliveryFee,
+        products: [],
+      };
+      console.log(thisCard.payload);
     }
 
   }
