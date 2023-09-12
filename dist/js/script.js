@@ -323,24 +323,21 @@ for(let optionId in param.options) {
           }
         }
       }
-      console.log('params:', params);
 
       return params;
     }
 
-     preparateCartProduct(){
-      //const thisProduct = this;
-      const productSummary = {
-        id: this.id,
-        name: this.data.name,
-        amount: this.amount,
-        priceSingle: this.priceSingle,
-        price: this.priceSingle * this.amountWidget.value,
-        params: this.prepareCartProductParams(),
 
+     preparateCartProduct(){
+      const thisProduct = this;
+      const productSummary = {
+        id: thisProduct.id,
+        name: thisProduct.data.name,
+        amount: thisProduct.amount,
+        priceSingle: thisProduct.priceSingle,
+        price: thisProduct.priceSingle * thisProduct.amountWidget.value,
+        params: this.prepareCartProductParams(),
       };
-      console.log(productSummary.params);
-      console.log(productSummary);
       return productSummary;
     }
 
@@ -364,6 +361,7 @@ for(let optionId in param.options) {
     getElements(element){
       const thisCart = this;
 
+
       thisCart.dom = {
         wrapper: element,
         toogleTrigger: element.querySelector(select.cart.toggleTrigger),
@@ -375,6 +373,7 @@ for(let optionId in param.options) {
         form: element.querySelector(select.cart.form),
         address: element.querySelector(select.cart.address),
         phone: element.querySelector(select.cart.phone),
+
 
       };
     }
@@ -393,7 +392,6 @@ for(let optionId in param.options) {
       });
       this.dom.form.addEventListener('submit', event => {
         event.preventDefault();
-        console.log('order has been sent');
         thisCart.sentOrder();
       });
      }
@@ -440,19 +438,37 @@ for(let optionId in param.options) {
     }
 
     sentOrder() {
-      const  thisCard = this;
-    //  const url = `${settings.db.url}/${settings.db.orders}`;
+    const thisCart = this;
+    const url = `${settings.db.url}/${settings.db.orders}`;
 
-      thisCard.payload = {
-        address: app.cart.dom.address.value,
-        phone: app.cart.dom.phone.value,
-        totalPrice: app.cart.totalPrice,
-        subtotalPrice: app.cart.subtotalPrice,
-        totalNumber: app.cart.totalNumber,
-        deliveryFee: app.cart.deliveryFee,
+     const payload = {
+        address: this.dom.address.value,
+        phone: this.dom.phone.value,
+        totalPrice: this.totalPrice,
+        subtotalPrice: this.subtotalPrice,
+        totalNumber: this.totalNumber,
+        deliveryFee: this.deliveryFee,
         products: [],
       };
-      console.log(thisCard.payload);
+      for(let prod of thisCart.products) {
+        payload.products.push(prod.getData());
+      }
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      };
+
+      fetch(url, options)
+        .then(function(response){
+          return response.json();
+        }).then(function(parsedResponse){
+          console.log('paresedResponse', parsedResponse);
+        })
+
     }
 
   }
@@ -464,7 +480,8 @@ for(let optionId in param.options) {
       this.amount = menuProduct.amount;
       this.priceSingle = menuProduct.priceSingle;
       this.price = menuProduct.price;
-      this.id = menuProduct.id;
+      this.params = menuProduct.params;
+
 
       this.getElements(element);
       this.initAmountWidget(this.amount);
@@ -518,6 +535,16 @@ for(let optionId in param.options) {
       this.dom.wrapper.dispatchEvent(event);
     }
 
+    getData() {
+      return {
+        name: this.id,
+        amount: this.amount,
+        price: this.price,
+        priceSingle: this.priceSingle,
+        params: this.params,
+      }
+    }
+
   }
   //Methods
   const app = {
@@ -531,7 +558,6 @@ for(let optionId in param.options) {
             return rawResponse.json();
           })
           .then(function(parsedResponse){
-            console.log('parsedREsponse', parsedResponse);
             /* save ParsedResponse as thisApp.data.products */
             thisApp.data.products = parsedResponse;
             /*execute initMenu method */
